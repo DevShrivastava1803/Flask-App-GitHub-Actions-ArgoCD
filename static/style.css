@@ -23,7 +23,7 @@ input[type="text"] {
 
 button {
     padding: 10px 15px;
-    background-color: #28a745;
+    background-color: #2fc9a2;
     color: white;
     border: none;
     border-radius: 5px;
@@ -31,7 +31,7 @@ button {
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #20866d;
 }
 
 .weather-info {
