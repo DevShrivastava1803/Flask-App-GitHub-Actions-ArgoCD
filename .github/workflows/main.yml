@@ -62,8 +62,9 @@ jobs:
       - name: Update K8s Manifests
         run: |
           cat deploy/deploy.yaml
-          sed -i "s|image:  devshrivastavacn/demo-app:.*|image:  devshrivastavacn/demo-app:${{ env.VERSION }}|g" deploy/deploy.yaml
+          sed -i "s|image:[[:space:]]*devshrivastavacn/demo-app:.*|image: devshrivastavacn/demo-app:${{ env.VERSION }}|g" deploy/deploy.yaml
           cat deploy/deploy.yaml
+
 
       # Update Github
       - name: Commit the changes
