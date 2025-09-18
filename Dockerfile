@@ -1,20 +1,35 @@
-FROM python:3.14.0a3-alpine3.21
+# syntax=docker/dockerfile:1
 
-# Set the working directory
+# Use stable Python instead of alpha
+FROM python:3.12-alpine
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . . 
+# Create non-root user
+ARG UID=10001
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    appuser
 
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
+# Install dependencies
+COPY requirements.txt .
+RUN --mount=type=cache,target=/root/.cache/pip \
+    python -m pip install -r requirements.txt
 
-#Expose the port
+# Copy app code and fix permissions
+COPY . .
+RUN chown -R appuser:appuser /app
+
+USER appuser
+
 EXPOSE 5000
 
-# Run app.py when the container launches
 CMD ["python", "app.py"]
-
-
-
-
