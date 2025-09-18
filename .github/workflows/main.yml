@@ -46,6 +46,7 @@ jobs:
         run: |
           VERSION=v$(date +"%Y%m%d%H%M%S")
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "VERSION=$VERSION"
 
       # Build the Docker Image
       - name: Build Docker Image
